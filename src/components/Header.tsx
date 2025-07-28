@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 
 interface HeaderProps {
@@ -16,6 +16,7 @@ const TABS = [
 
 export default function Header({ onMenuToggle }: HeaderProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const { logout, userEmail } = useAuth();
   const [activeTab, setActiveTab] = useState('products');
   const [showCreateMenu, setShowCreateMenu] = useState(false);
@@ -39,6 +40,17 @@ export default function Header({ onMenuToggle }: HeaderProps) {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  // Update active tab based on current pathname
+  useEffect(() => {
+    if (pathname === '/' || pathname.startsWith('/product/') || pathname.startsWith('/create-product')) {
+      setActiveTab('products');
+    } else if (pathname === '/datasets' || pathname.startsWith('/dataset/') || pathname.startsWith('/create-dataset')) {
+      setActiveTab('datasets');
+    } else if (pathname.startsWith('/evaluation/') || pathname.startsWith('/create-evaluation')) {
+      setActiveTab('evaluations');
+    }
+  }, [pathname]);
 
   const toggleCreateMenu = useCallback(() => {
     setShowCreateMenu(prev => !prev);
