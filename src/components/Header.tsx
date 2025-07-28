@@ -60,6 +60,31 @@ export default function Header({ onMenuToggle }: HeaderProps) {
     router.push('/create-product');
   }, [router]);
 
+  const handleCreateDataset = useCallback(() => {
+    setShowCreateMenu(false);
+    router.push('/create-dataset');
+  }, [router]);
+
+  const handleCreateEvaluation = useCallback(() => {
+    setShowCreateMenu(false);
+    router.push('/create-evaluation');
+  }, [router]);
+
+  const handleTabClick = useCallback((tabId: string) => {
+    setActiveTab(tabId);
+    switch (tabId) {
+      case 'products':
+        router.push('/');
+        break;
+      case 'datasets':
+        router.push('/datasets');
+        break;
+      case 'evaluations':
+        router.push('/evaluations');
+        break;
+    }
+  }, [router]);
+
   return (
     <header className="bg-white border-b border-slate-200 h-16 sticky top-0 z-50">
       <div className="flex items-center justify-between h-full px-4 lg:px-6">
@@ -90,7 +115,7 @@ export default function Header({ onMenuToggle }: HeaderProps) {
           {TABS.map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => handleTabClick(tab.id)}
               className={`flex items-center gap-1 lg:gap-2 px-2 lg:px-2.5 py-1.5 rounded-lg text-xs lg:text-sm font-medium transition-colors cursor-pointer ${
                 activeTab === tab.id
                   ? 'bg-white text-neutral-900 shadow-sm'
@@ -125,11 +150,17 @@ export default function Header({ onMenuToggle }: HeaderProps) {
                     <span>📦</span>
                     Create a product
                   </button>
-                  <button className="w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2 cursor-pointer">
+                  <button 
+                    onClick={handleCreateDataset}
+                    className="w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2 cursor-pointer"
+                  >
                     <span>🗄️</span>
                     Create a dataset
                   </button>
-                  <button className="w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2 cursor-pointer">
+                  <button 
+                    onClick={handleCreateEvaluation}
+                    className="w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2 cursor-pointer"
+                  >
                     <span>🧭</span>
                     Create an evaluation
                   </button>
