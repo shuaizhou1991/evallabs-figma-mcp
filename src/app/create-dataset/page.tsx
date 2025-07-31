@@ -13,12 +13,9 @@ export default function CreateDatasetPage() {
   const [datasetName, setDatasetName] = useState('');
   const [license, setLicense] = useState('');
   const [visibility, setVisibility] = useState('public');
-  const [format, setFormat] = useState('');
-  const [size, setSize] = useState('');
-  const [quality, setQuality] = useState('');
 
   const handleCreate = useCallback(() => {
-    if (!datasetName.trim() || !license || !format || !size || !quality) {
+    if (!datasetName.trim() || !license) {
       toast({
         title: "Validation Error",
         description: "Please fill in all required fields",
@@ -30,20 +27,20 @@ export default function CreateDatasetPage() {
     const newDataset: Dataset = {
       id: Date.now(),
       name: datasetName.trim(),
-      description: `A new ${visibility} dataset with ${format} format and ${quality} quality`,
+      description: `A new ${visibility} dataset`,
       updated: new Date().toLocaleDateString('en-US', { 
         month: 'short', 
         day: 'numeric', 
         year: 'numeric' 
       }),
-      size: size,
-      format: format,
+      size: 'Medium (1MB - 100MB)', // Default value
+      format: 'CSV', // Default value
       price: 0,
       domain: ['General'],
       language: ['English'],
       license: license.toUpperCase(),
-      quality: quality,
-      version: '1.0',
+      quality: 'Medium', // Default value
+      version: '1.0.0',
     };
     
     try {
@@ -67,16 +64,17 @@ export default function CreateDatasetPage() {
         variant: "destructive",
       });
     }
-  }, [datasetName, license, visibility, format, size, quality, router, toast]);
+  }, [datasetName, license, visibility, router, toast]);
 
   const handleCancel = useCallback(() => {
     router.push('/datasets');
   }, [router]);
 
-  const isFormValid = datasetName.trim() && license && format && size && quality;
+  const isFormValid = datasetName.trim() && license;
 
   return (
     <div className="bg-white min-h-screen">
+      {/* Header */}
       <header className="bg-white border-b border-slate-200 h-16 sticky top-0 z-50">
         <div className="flex items-center justify-between h-full px-4 lg:px-6">
           <div className="flex items-center gap-2">
@@ -108,12 +106,14 @@ export default function CreateDatasetPage() {
         </div>
       </header>
 
+      {/* Main Content */}
       <div className="flex flex-col items-center pt-16 pb-8">
         <h2 className="text-2xl font-semibold text-black tracking-tight mb-10">
           Create a new dataset
         </h2>
 
         <div className="w-full max-w-md space-y-6 px-4">
+          {/* Dataset Name */}
           <div className="space-y-1.5">
             <Label htmlFor="dataset-name" className="text-sm font-medium text-slate-900">
               Dataset name <span className="text-red-500">*</span>
@@ -128,85 +128,37 @@ export default function CreateDatasetPage() {
             />
           </div>
 
-          <div className="space-y-1.5">
-            <Label htmlFor="format" className="text-sm font-medium text-slate-900">
-              Format <span className="text-red-500">*</span>
-            </Label>
-            <select
-              id="format"
-              value={format}
-              onChange={(e) => setFormat(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent text-slate-900 bg-white"
-            >
-              <option value="">Select a format *</option>
-              <option value="text">Text</option>
-              <option value="image">Image</option>
-              <option value="audio">Audio</option>
-              <option value="video">Video</option>
-              <option value="code">Code</option>
-              <option value="image-text">Image-Text</option>
-            </select>
-          </div>
-
-          <div className="space-y-1.5">
-            <Label htmlFor="size" className="text-sm font-medium text-slate-900">
-              Size <span className="text-red-500">*</span>
-            </Label>
-            <select
-              id="size"
-              value={size}
-              onChange={(e) => setSize(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent text-slate-900 bg-white"
-            >
-              <option value="">Select a size *</option>
-              <option value="Small">Small</option>
-              <option value="Medium">Medium</option>
-              <option value="Large">Large</option>
-              <option value="Very Large">Very Large</option>
-            </select>
-          </div>
-
-          <div className="space-y-1.5">
-            <Label htmlFor="quality" className="text-sm font-medium text-slate-900">
-              Quality <span className="text-red-500">*</span>
-            </Label>
-            <select
-              id="quality"
-              value={quality}
-              onChange={(e) => setQuality(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent text-slate-900 bg-white"
-            >
-              <option value="">Select quality level *</option>
-              <option value="Very High">Very High</option>
-              <option value="High">High</option>
-              <option value="Medium">Medium</option>
-              <option value="Low">Low</option>
-            </select>
-          </div>
-
+          {/* License */}
           <div className="space-y-1.5">
             <Label htmlFor="license" className="text-sm font-medium text-slate-900">
               License <span className="text-red-500">*</span>
             </Label>
-            <select
-              id="license"
-              value={license}
-              onChange={(e) => setLicense(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent text-slate-900 bg-white"
-            >
-              <option value="">Select a license *</option>
-              <option value="CC0">CC0</option>
-              <option value="CC BY-SA">CC BY-SA</option>
-              <option value="Fair Use">Fair Use</option>
-              <option value="MIT">MIT</option>
-              <option value="Apache 2.0">Apache 2.0</option>
-              <option value="CC BY 4.0">CC BY 4.0</option>
-              <option value="CC BY-NC 4.0">CC BY-NC 4.0</option>
-            </select>
+            <div className="relative">
+              <select
+                id="license"
+                value={license}
+                onChange={(e) => setLicense(e.target.value)}
+                className="w-full px-3 py-2 pr-10 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent text-slate-900 bg-white appearance-none cursor-pointer"
+              >
+                <option value="">Select a license *</option>
+                <option value="MIT">MIT</option>
+                <option value="Apache-2.0">Apache 2.0</option>
+                <option value="GPL-3.0">GPL 3.0</option>
+                <option value="BSD-3">BSD 3-Clause</option>
+                <option value="CC-BY">Creative Commons Attribution</option>
+                <option value="CC-BY-SA">Creative Commons Attribution-ShareAlike</option>
+              </select>
+              <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
           </div>
 
           <div className="border-t border-slate-200"></div>
 
+          {/* Visibility */}
           <RadioGroup value={visibility} onValueChange={setVisibility} className="space-y-4">
             <div className="flex items-start space-x-3">
               <RadioGroupItem value="public" id="public" className="mt-0.5" />
@@ -235,6 +187,7 @@ export default function CreateDatasetPage() {
 
           <div className="border-t border-slate-200"></div>
 
+          {/* Action Buttons */}
           <div className="flex items-center gap-2">
             <button
               onClick={handleCreate}

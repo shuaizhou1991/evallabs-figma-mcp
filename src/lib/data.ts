@@ -9,6 +9,11 @@ export interface Product {
   input: string[];
   output: string[];
   license: string;
+  productLink?: string;
+  suitedTasks?: string;
+  visibility?: string;
+  languages?: string[];
+  scalability?: string;
 }
 
 export const defaultProducts: Product[] = [
@@ -23,6 +28,8 @@ export const defaultProducts: Product[] = [
     input: ['text', 'image'],
     output: ['text'],
     license: 'Proprietary',
+    languages: ['English'],
+    scalability: 'High',
   },
   {
     id: 2,
@@ -35,6 +42,8 @@ export const defaultProducts: Product[] = [
     input: ['text', 'image'],
     output: ['text'],
     license: 'Proprietary',
+    languages: ['English'],
+    scalability: 'High',
   },
   {
     id: 3,
@@ -47,6 +56,8 @@ export const defaultProducts: Product[] = [
     input: ['text', 'image', 'audio'],
     output: ['text', 'image'],
     license: 'Proprietary',
+    languages: ['English', 'Spanish', 'French', 'German'],
+    scalability: 'Higher',
   },
   {
     id: 4,
@@ -59,6 +70,8 @@ export const defaultProducts: Product[] = [
     input: ['text'],
     output: ['text'],
     license: 'MIT',
+    languages: ['English'],
+    scalability: 'Medium',
   },
   {
     id: 5,
@@ -71,6 +84,8 @@ export const defaultProducts: Product[] = [
     input: ['text'],
     output: ['text'],
     license: 'Proprietary',
+    languages: ['English', 'French'],
+    scalability: 'High',
   },
   {
     id: 6,
@@ -83,6 +98,8 @@ export const defaultProducts: Product[] = [
     input: ['text'],
     output: ['text'],
     license: 'MIT',
+    languages: ['English'],
+    scalability: 'Medium',
   },
   {
     id: 7,
@@ -95,6 +112,8 @@ export const defaultProducts: Product[] = [
     input: ['text'],
     output: ['text'],
     license: 'Proprietary',
+    languages: ['English', 'Spanish', 'French', 'German', 'Chinese'],
+    scalability: 'High',
   },
   {
     id: 8,

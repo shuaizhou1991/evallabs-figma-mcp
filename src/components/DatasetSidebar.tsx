@@ -2,105 +2,18 @@
 
 import { useState, useMemo } from 'react';
 import { Slider } from '@/components/ui/slider';
-import { DEFAULT_PRICE_RANGE, MAX_PRICE } from '@/lib/constants';
+import { 
+  DATASET_SIZES, 
+  DATASET_FORMATS, 
+  DATASET_DOMAINS, 
+  DATASET_LANGUAGES, 
+  DATASET_QUALITIES, 
+  DATASET_CATEGORIES,
+  LICENSE_TYPES,
+  DEFAULT_PRICE_RANGE,
+  MAX_PRICE
+} from '@/lib/constants';
 import { getDatasetFilterCount } from '@/lib/dataset-filters';
-
-// Dataset-specific constants
-const DATASET_CATEGORIES = [
-  { id: 'all', label: 'All' },
-  { id: 'size', label: 'Size' },
-  { id: 'format', label: 'Format' },
-  { id: 'price', label: 'Price' },
-  { id: 'domain', label: 'Domain' },
-  { id: 'language', label: 'Language' },
-  { id: 'license', label: 'License' },
-  { id: 'quality', label: 'Quality' },
-] as const;
-
-const SIZE_LEVELS = [
-  { id: 'small', label: 'Small' },
-  { id: 'medium', label: 'Medium' },
-  { id: 'large', label: 'Large' },
-  { id: 'very large', label: 'Very Large' },
-] as const;
-
-const FORMAT_TYPES = [
-  { id: 'text', label: 'Text' },
-  { id: 'image', label: 'Image' },
-  { id: 'audio', label: 'Audio' },
-  { id: 'video', label: 'Video' },
-  { id: 'code', label: 'Code' },
-  { id: 'image-text', label: 'Image-Text' },
-] as const;
-
-const DOMAIN_TYPES = [
-  { id: 'Web', label: 'Web' },
-  { id: 'News', label: 'News' },
-  { id: 'Blogs', label: 'Blogs' },
-  { id: 'Education', label: 'Education' },
-  { id: 'Knowledge', label: 'Knowledge' },
-  { id: 'Literature', label: 'Literature' },
-  { id: 'Fiction', label: 'Fiction' },
-  { id: 'Non-fiction', label: 'Non-fiction' },
-  { id: 'Social Media', label: 'Social Media' },
-  { id: 'General', label: 'General' },
-  { id: 'Academic', label: 'Academic' },
-  { id: 'Books', label: 'Books' },
-  { id: 'Images', label: 'Images' },
-  { id: 'Computer Vision', label: 'Computer Vision' },
-  { id: 'Object Detection', label: 'Object Detection' },
-  { id: 'Classification', label: 'Classification' },
-  { id: 'Speech', label: 'Speech' },
-  { id: 'Audio', label: 'Audio' },
-  { id: 'Question Answering', label: 'Question Answering' },
-  { id: 'NLP', label: 'NLP' },
-  { id: 'Evaluation', label: 'Evaluation' },
-  { id: 'Programming', label: 'Programming' },
-  { id: 'Code', label: 'Code' },
-  { id: 'Mathematics', label: 'Mathematics' },
-  { id: 'Reasoning', label: 'Reasoning' },
-  { id: 'Problem Solving', label: 'Problem Solving' },
-  { id: 'Science', label: 'Science' },
-  { id: 'Commonsense', label: 'Commonsense' },
-  { id: 'Truthfulness', label: 'Truthfulness' },
-  { id: 'Toxicity', label: 'Toxicity' },
-  { id: 'Safety', label: 'Safety' },
-  { id: 'Bias', label: 'Bias' },
-  { id: 'Fairness', label: 'Fairness' },
-  { id: 'Coreference', label: 'Coreference' },
-  { id: 'Face Recognition', label: 'Face Recognition' },
-  { id: 'Face Generation', label: 'Face Generation' },
-  { id: 'Urban Scenes', label: 'Urban Scenes' },
-  { id: 'Scene Parsing', label: 'Scene Parsing' },
-] as const;
-
-const LANGUAGE_TYPES = [
-  { id: 'English', label: 'English' },
-  { id: 'Multilingual', label: 'Multilingual' },
-  { id: 'Python', label: 'Python' },
-  { id: 'JavaScript', label: 'JavaScript' },
-  { id: 'Java', label: 'Java' },
-  { id: 'Go', label: 'Go' },
-  { id: 'PHP', label: 'PHP' },
-  { id: 'Ruby', label: 'Ruby' },
-] as const;
-
-const LICENSE_TYPES = [
-  { id: 'CC0', label: 'CC0' },
-  { id: 'CC BY-SA', label: 'CC BY-SA' },
-  { id: 'Fair Use', label: 'Fair Use' },
-  { id: 'MIT', label: 'MIT' },
-  { id: 'Apache 2.0', label: 'Apache 2.0' },
-  { id: 'CC BY 4.0', label: 'CC BY 4.0' },
-  { id: 'CC BY-NC 4.0', label: 'CC BY-NC 4.0' },
-] as const;
-
-const QUALITY_LEVELS = [
-  { id: 'very high', label: 'Very High' },
-  { id: 'high', label: 'High' },
-  { id: 'medium', label: 'Medium' },
-  { id: 'low', label: 'Low' },
-] as const;
 
 interface DatasetSidebarProps {
   selectedSize: string[];
@@ -335,14 +248,14 @@ export default function DatasetSidebar({
       {activeCategory === 'size' && (
         <div>
           <h3 className="text-sm font-medium text-slate-900 mb-2">Dataset Size</h3>
-          {renderFilterButtons(SIZE_LEVELS, selectedSize, setSelectedSize, '📊')}
+          {renderFilterButtons(DATASET_SIZES, selectedSize, setSelectedSize, '📏')}
         </div>
       )}
 
       {activeCategory === 'format' && (
         <div>
           <h3 className="text-sm font-medium text-slate-900 mb-2">Data Format</h3>
-          {renderFilterButtons(FORMAT_TYPES, selectedFormat, setSelectedFormat, '📄')}
+          {renderFilterButtons(DATASET_FORMATS, selectedFormat, setSelectedFormat, '📄')}
         </div>
       )}
 
@@ -373,14 +286,14 @@ export default function DatasetSidebar({
       {activeCategory === 'domain' && (
         <div>
           <h3 className="text-sm font-medium text-slate-900 mb-2">Domain</h3>
-          {renderFilterButtons(DOMAIN_TYPES, selectedDomain, setSelectedDomain, '🏷️')}
+          {renderFilterButtons(DATASET_DOMAINS, selectedDomain, setSelectedDomain, '🌐')}
         </div>
       )}
 
       {activeCategory === 'language' && (
         <div>
           <h3 className="text-sm font-medium text-slate-900 mb-2">Language</h3>
-          {renderFilterButtons(LANGUAGE_TYPES, selectedLanguage, setSelectedLanguage, '🌐')}
+          {renderFilterButtons(DATASET_LANGUAGES, selectedLanguage, setSelectedLanguage, '🌍')}
         </div>
       )}
 
@@ -393,15 +306,15 @@ export default function DatasetSidebar({
 
       {activeCategory === 'quality' && (
         <div>
-          <h3 className="text-sm font-medium text-slate-900 mb-2">Data Quality</h3>
-          {renderFilterButtons(QUALITY_LEVELS, selectedQuality, setSelectedQuality, '⭐')}
+          <h3 className="text-sm font-medium text-slate-900 mb-2">Quality Level</h3>
+          {renderFilterButtons(DATASET_QUALITIES, selectedQuality, setSelectedQuality, '⭐')}
         </div>
       )}
 
       {activeCategory === 'all' && (
         <div className="space-y-6">
-          {renderSection('Dataset Size', '📊', SIZE_LEVELS, selectedSize, setSelectedSize, () => setSelectedSize([]))}
-          {renderSection('Data Format', '📄', FORMAT_TYPES, selectedFormat, setSelectedFormat, () => setSelectedFormat([]))}
+          {renderSection('Dataset Size', '📏', DATASET_SIZES, selectedSize, setSelectedSize, () => setSelectedSize([]))}
+          {renderSection('Data Format', '📄', DATASET_FORMATS, selectedFormat, setSelectedFormat, () => setSelectedFormat([]))}
           
           {/* Price Section */}
           <div>
@@ -436,10 +349,10 @@ export default function DatasetSidebar({
             </div>
           </div>
 
-          {renderSection('Domain', '🏷️', DOMAIN_TYPES, selectedDomain, setSelectedDomain, () => setSelectedDomain([]))}
-          {renderSection('Language', '🌐', LANGUAGE_TYPES, selectedLanguage, setSelectedLanguage, () => setSelectedLanguage([]))}
+          {renderSection('Domain', '🌐', DATASET_DOMAINS, selectedDomain, setSelectedDomain, () => setSelectedDomain([]))}
+          {renderSection('Language', '🌍', DATASET_LANGUAGES, selectedLanguage, setSelectedLanguage, () => setSelectedLanguage([]))}
           {renderSection('License Types', '📋', LICENSE_TYPES, selectedLicense, setSelectedLicense, () => setSelectedLicense([]))}
-          {renderSection('Data Quality', '⭐', QUALITY_LEVELS, selectedQuality, setSelectedQuality, () => setSelectedQuality([]))}
+          {renderSection('Quality Level', '⭐', DATASET_QUALITIES, selectedQuality, setSelectedQuality, () => setSelectedQuality([]))}
         </div>
       )}
     </aside>

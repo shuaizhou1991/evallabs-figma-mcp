@@ -45,7 +45,7 @@ export default function DatasetList({
   setSearchTerm,
   itemsPerPage = 20,
 }: DatasetListProps) {
-  const [sortBy, setSortBy] = useState('trending');
+  const [sortBy] = useState('trending');
   const [currentPage, setCurrentPage] = useState(1);
 
   // Get datasets once and memoize
@@ -67,7 +67,6 @@ export default function DatasetList({
   const filteredDatasets = useMemo(() => filterDatasets(datasets, filters), [datasets, filters]);
 
   // Pagination logic
-  const totalPages = Math.ceil(filteredDatasets.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentDatasets = filteredDatasets.slice(startIndex, endIndex);
@@ -145,7 +144,7 @@ export default function DatasetList({
         ) : (
           <div className="flex flex-col items-center justify-center py-16 px-4">
             <div className="w-24 h-24 bg-slate-100 rounded-full flex items-center justify-center mb-6">
-              <span className="text-4xl">📊</span>
+              <span className="text-4xl">🗄️</span>
             </div>
             <h3 className="text-xl font-semibold text-slate-900 mb-2">
               No datasets found

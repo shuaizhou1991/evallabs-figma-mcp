@@ -8,7 +8,7 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 import { DEFAULT_PRICE_RANGE } from '@/lib/constants';
 
 export default function DatasetsPage() {
-  // Filter state
+  // Filter states
   const [selectedSize, setSelectedSize] = useState<string[]>([]);
   const [selectedFormat, setSelectedFormat] = useState<string[]>([]);
   const [selectedPriceRange, setSelectedPriceRange] = useState<[number, number]>(DEFAULT_PRICE_RANGE);
@@ -31,7 +31,7 @@ export default function DatasetsPage() {
           
           {/* Sidebar */}
           <div className={`fixed lg:relative inset-y-0 left-0 z-50 lg:z-auto transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 transition-transform duration-300 ease-in-out`}>
-            <DatasetSidebar 
+            <DatasetSidebar
               selectedSize={selectedSize}
               setSelectedSize={setSelectedSize}
               selectedFormat={selectedFormat}

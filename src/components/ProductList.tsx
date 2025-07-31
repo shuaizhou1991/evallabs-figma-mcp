@@ -41,7 +41,7 @@ export default function ProductList({
   setSearchTerm,
   itemsPerPage = 20,
 }: ProductListProps) {
-  const [sortBy, setSortBy] = useState('trending');
+  const [sortBy] = useState('trending');
   const [currentPage, setCurrentPage] = useState(1);
 
   // Get products once and memoize
@@ -62,7 +62,6 @@ export default function ProductList({
   const filteredProducts = useMemo(() => filterProducts(products, filters), [products, filters]);
 
   // Pagination logic
-  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentProducts = filteredProducts.slice(startIndex, endIndex);

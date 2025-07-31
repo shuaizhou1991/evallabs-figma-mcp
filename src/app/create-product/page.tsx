@@ -39,6 +39,8 @@ export default function CreateProductPage() {
       input: ['text'],
       output: ['text'],
       license: license.toUpperCase(),
+      languages: ['English'],
+      scalability: 'Medium',
     };
     
     try {

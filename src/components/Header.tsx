@@ -144,7 +144,7 @@ export default function Header({ onMenuToggle }: HeaderProps) {
         <div className="flex items-center gap-3 lg:gap-6">
           <div className="relative" ref={dropdownRef}>
             <button 
-              className="bg-slate-900 text-white px-3 lg:px-4 py-2 rounded-md flex items-center gap-1 lg:gap-2 text-sm font-medium hover:bg-slate-800 transition-colors cursor-pointer"
+              className="bg-slate-900 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-slate-800 transition-colors cursor-pointer h-9 flex items-center gap-1 lg:gap-2"
               onClick={toggleCreateMenu}
             >
               <span className="text-base lg:text-lg">+</span>
