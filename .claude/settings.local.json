@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude --version)",
+      "Bash(npm install:*)",
+      "WebFetch(domain:docs.anthropic.com)",
+      "Bash(npx create-next-app:*)",
+      "Bash(timeout 10 bash -c 'echo -e \"\"Y\\nN\"\" | npx create-next-app@latest expense-tracker --typescript --tailwind --eslint --app --use-npm --no-src-dir')",
+      "Bash(mkdir:*)",
+      "Bash(ls:*)",
+      "Bash(npx next@latest dev:*)",
+      "Bash(npm run dev:*)",
+      "Bash(pkill:*)",
+      "Bash(true)",
+      "Bash(rm:*)",
+      "Bash(curl:*)",
+      "Bash(npm run build:*)",
+      "Bash(timeout:*)",
+      "Bash(git config:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git branch:*)",
+      "Bash(git checkout:*)",
+      "Bash(python:*)",
+      "Bash(pgrep:*)",
+      "Bash(grep:*)",
+      "Bash(npm run start:*)",
+      "Bash(find:*)",
+      "Bash(node:*)",
+      "Bash(telnet:*)",
+      "Bash(nc:*)",
+      "Bash(env)",
+      "Bash(claude mcp add:*)"
+    ],
+    "deny": []
+  }
+}
