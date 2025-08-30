@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { Dataset } from '@/lib/datasets';
 import { useToast } from '@/hooks/use-toast';
 
@@ -10,7 +9,7 @@ interface DatasetContentDisplayProps {
 }
 
 interface DataRow {
-  [key: string]: any;
+  [key: string]: string | number | boolean | null;
 }
 
 interface ColumnWidth {
@@ -18,10 +17,9 @@ interface ColumnWidth {
 }
 
 export default function DatasetContentDisplay({ dataset }: DatasetContentDisplayProps) {
-  const router = useRouter();
   const { toast } = useToast();
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedCell, setSelectedCell] = useState<{ row: DataRow; column: string; value: any } | null>(null);
+  const [selectedCell, setSelectedCell] = useState<{ row: DataRow; column: string; value: string | number | boolean | null } | null>(null);
   const [columnWidths, setColumnWidths] = useState<ColumnWidth>({});
   const [isResizing, setIsResizing] = useState<string | null>(null);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -69,7 +67,7 @@ export default function DatasetContentDisplay({ dataset }: DatasetContentDisplay
     });
   }, [columns]);
 
-  const handleCellClick = (row: DataRow, column: string, value: any) => {
+  const handleCellClick = (row: DataRow, column: string, value: string | number | boolean | null) => {
     setSelectedCell({ row, column, value });
   };
   
@@ -224,7 +222,7 @@ export default function DatasetContentDisplay({ dataset }: DatasetContentDisplay
     try {
       // Get existing datasets from localStorage
       const existingDatasets = localStorage.getItem('datasets');
-      let datasets: Dataset[] = existingDatasets ? JSON.parse(existingDatasets) : [];
+      const datasets: Dataset[] = existingDatasets ? JSON.parse(existingDatasets) : [];
       
       // Find the dataset and clear its data
       const updatedDatasets = datasets.map((d: Dataset) => {
@@ -262,7 +260,7 @@ export default function DatasetContentDisplay({ dataset }: DatasetContentDisplay
     }
   };
 
-  const formatCellValue = (value: any): string => {
+  const formatCellValue = (value: string | number | boolean | null): string => {
     if (value === null || value === undefined) return '';
     if (typeof value === 'string' && value.length > 100) {
       return `${value.substring(0, 100)}...`;

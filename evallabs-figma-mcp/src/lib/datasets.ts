@@ -11,7 +11,7 @@ export interface Dataset {
   license: string;
   quality: string;
   version: string;
-  actualData?: any[];
+  actualData?: Record<string, string | number | boolean | null>[];
 }
 
 export const defaultDatasets: Dataset[] = [
