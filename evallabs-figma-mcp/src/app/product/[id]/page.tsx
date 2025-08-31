@@ -27,6 +27,10 @@ interface Product {
   benchmarks?: Benchmark[];
 }
 
+interface Dataset {
+  name: string;
+}
+
 interface Benchmark {
   name: string;
   score: number;
@@ -38,7 +42,6 @@ interface Benchmark {
 export default function ProductDetailPage() {
   const router = useRouter();
   const params = useParams();
-  const { toast } = useToast();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -69,7 +72,7 @@ export default function ProductDetailPage() {
 
   const datasets = getDatasets();
   const benchmarks: Benchmark[] = datasets
-    .map((dataset: any) => ({
+    .map((dataset: Dataset) => ({
       name: dataset.name,
       score: Math.random() * 100, // Using random score for now
       rank: 0, // Will be assigned after sorting
