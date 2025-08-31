@@ -62,12 +62,25 @@ export default function DatasetDetailPage() {
 
   useEffect(() => {
     const products = getProducts();
-    const formattedLeaderboardData = products.map((product, index) => ({
-      rank: index + 1,
-      product: product,
-      score: parseFloat((Math.random() * (99.9 - 60) + 60).toFixed(1)), // Mock score
-      evaluationDate: product.updated,
-    }));
+    const formattedLeaderboardData = products
+      .map((product) => ({
+        rank: 0, // Will be assigned after sorting
+        product: product,
+        score: parseFloat((Math.random() * (99.9 - 60) + 60).toFixed(1)), // Mock score
+        evaluationDate: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true
+        }),
+      }))
+      .sort((a, b) => (b.score as number) - (a.score as number)) // Sort by score descending
+      .map((entry, index) => ({
+        ...entry,
+        rank: index + 1, // Assign rank based on sorted position
+      }));
     setLeaderboardData(formattedLeaderboardData);
   }, []);
 
